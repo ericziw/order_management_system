@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <iomanip>
 using namespace std;
 
 struct Customer {
@@ -21,20 +22,20 @@ struct Order {
 	string order_item[10];
 } Odr[10];
 
-void name_check(Customer C[], string f, string l, int &cust_num, bool &check);
+void name_check(Customer C[], string f, string l, int &cust_num, bool &check, int cust_amount);
 
 int main()
 {
-	int N;
+	int cust_amount;
 	
 	ifstream infile;
 	infile.open("customers.dat");
 	
-	infile >> N;
+	infile >> cust_amount;
 	
-	Customer C[N];
+	Customer C[cust_amount];
 	
-	for(int i = 0; i < 5; i++)
+	for(int i = 0; i < cust_amount; i++)
 	{
 		infile >> C[i].first_name;
 		infile >> C[i].last_name;
@@ -50,7 +51,7 @@ int main()
 	int cust_num = 0;
 	int item_amount = 0;
 	int order_num = 0;
-	for(int i = 0; i < 5; i++)
+	for(int i = 0; i < cust_amount; i++)
 	{
 		for(int j = 0; j < 10; j++)
 		{
@@ -66,7 +67,6 @@ int main()
 		Odr[i].order_id = -1;
 	}
 	
-	
 	string command;
 	string f_name;
 	string l_name;
@@ -81,7 +81,7 @@ int main()
 		{
 			infile >> f_name;
 			infile >> l_name;
-			name_check(C, f_name, l_name, cust_num, check);
+			name_check(C, f_name, l_name, cust_num, check, cust_amount);
 			
 			if(check == true)
 			{
@@ -103,7 +103,7 @@ int main()
 			bool order_cap = false;
 			infile >> f_name;
 			infile >> l_name;
-			name_check(C, f_name, l_name, cust_num, check);
+			name_check(C, f_name, l_name, cust_num, check, cust_amount);
 			
 			if(check == true)
 			{
@@ -156,7 +156,7 @@ int main()
 		{
 			bool order_exist = true;
 			infile >> order_num_f;
-			for(int i = 0; i < 5; i++)
+			for(int i = 0; i < cust_amount; i++)
 			{
 				for(int j = 0; j < 10; j++)
 				{
@@ -195,15 +195,15 @@ int main()
 	
 	infile.close();
 	
-	cout << "######################" << endl;
+	cout << setfill('#') << setw(22) << "#" << endl;
 	cout << "Customers" << endl;
-	cout << "######################" << endl;
+	cout << setfill('#') << setw(22) << "#" << endl;
 			
-	for(int i = 0; i < 5; i++)
+	for(int i = 0; i < cust_amount; i++)
 	{
 		cout << C[i].first_name << " " << C[i].last_name << endl;
 		cout << C[i].age << endl;
-		cout << C[i].address_num << " " << C[i].address_name << " " << C[i].address_suffix << endl;
+		cout << C[i].address_num << " " << C[i].address_name << " " << C[i].address_suffix << endl << endl;
 		cout << "Open Orders: ";
 		for(int j = 0; j < 10; j++)
 		{
@@ -213,7 +213,12 @@ int main()
 			}
 		}
 		cout << endl << endl;
+		cout << setfill('-') << setw(22) << "-" << endl;
 	}
+	
+	cout << setfill('#') << setw(22) << "#" << endl;
+	cout << "All Open Orders" << endl;
+	cout << setfill('#') << setw(22) << "#" << endl;
 	
 	int k;
 	for(int i = 0; i < 10; i++)
@@ -226,15 +231,28 @@ int main()
 				cout << "No Open Orders" << endl;
 				break;
 			}
-			cout << "Order " << Odr[i].order_id << ": " << Odr[i].order_item[j] << endl;
+			cout << "Order " << Odr[i].order_id << ": " << Odr[i].order_item[j] << endl << endl;
 		}
+	}
+	
+	cout << setfill('#') << setw(22) << "#" << endl;
+	cout << "Order Prices" << endl;
+	cout << setfill('#') << setw(22) << "#" << endl;
+	
+	for(int i = 0; i < 10; i++)
+	{
+		if(Odr[i].order_id == -1)
+		{
+			continue;
+		}
+		cout << "Order " << Odr[i].order_id << ": " << Odr[i].order_price << endl << endl;
 	}
 	
 }
 
-void name_check(Customer C[], string f, string l, int &cust_num, bool &check)
+void name_check(Customer C[], string f, string l, int &cust_num, bool &check, int cust_amount)
 {
-	for(int i = 0; i < 5; i++)
+	for(int i = 0; i < cust_amount; i++)
 	{
 		if(f == C[i].first_name)
 		{
