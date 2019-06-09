@@ -9,6 +9,6 @@ simple data management system with select commands
 
 ## commands' syntax
 
-* update: update (first name) (last name) (updated first name) (updated last name) (updated age) (updated street number) (updated street name) (updated street suffix)
+* update: update (first name) (last name) (updated first name) (updated last name) (updated age) (updated address number) (updated address name) (updated address suffix)
 * place: place (first name) (last name) (price) (item amount) (items)...
 * fulfill: fulfill (order number)
