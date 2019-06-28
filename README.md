@@ -1,5 +1,6 @@
 # order_management_system
 simple data management system with select commands
+replicating a POS system
 
 ## commands
 
